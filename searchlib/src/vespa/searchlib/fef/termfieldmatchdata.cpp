@@ -61,9 +61,16 @@ void sswap(T * a, T * b) {
 void
 TermFieldMatchData::swap(TermFieldMatchData &rhs)
 {
+#ifdef __clang__
+#pragma clang diagnostic push
+#pragma clang diagnostic ignored "-Waddress-of-packed-member"
+#endif
     sswap(&_docId, &rhs._docId);
     sswap(&_fieldId, &rhs._fieldId);
     sswap(&_sz, &rhs._sz);
+#ifdef __clang__
+#pragma clang diagnostic pop
+#endif
     char tmp[sizeof(_data)];
     memcpy(tmp, &rhs._data, sizeof(_data));
     memcpy(&rhs._data, &_data, sizeof(_data));

@@ -73,6 +73,21 @@ bool ThreadListT<MemBlockPtrT, ThreadStatT>::initThisThread()
 
     return retval;
 }
+
+template <typename MemBlockPtrT, typename ThreadStatT>
+typename ThreadListT<MemBlockPtrT, ThreadStatT>::ThreadPool &
+ThreadListT<MemBlockPtrT, ThreadStatT>::getCurrent()
+{
+    return *_myPool;
+}
+
+template <typename MemBlockPtrT, typename ThreadStatT>
+size_t
+ThreadListT<MemBlockPtrT, ThreadStatT>::getThreadId() const
+{
+    return (_myPool - _threadVector);
+}
+
 template <typename MemBlockPtrT, typename ThreadStatT>
 __thread ThreadPoolT<MemBlockPtrT, ThreadStatT> * ThreadListT<MemBlockPtrT, ThreadStatT>::_myPool TLS_LINKAGE = NULL;
 

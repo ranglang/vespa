@@ -24,8 +24,8 @@ public:
     }
     bool quitThisThread();
     bool initThisThread();
-    ThreadPool & getCurrent()  { return *_myPool; }
-    size_t getThreadId() const { return (_myPool - _threadVector); }
+    ThreadPool & getCurrent();
+    size_t getThreadId() const;
     void enableThreadSupport() {
         if ( ! _isThreaded ) {
             _isThreaded = true;

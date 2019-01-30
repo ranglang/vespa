@@ -37,7 +37,7 @@ protected:
     virtual void onEncodeReply(GBBuf&, const api::StorageReply&) const = 0;
 
     virtual void onEncodeDiffEntry(GBBuf&, const api::GetBucketDiffCommand::Entry&) const;
-    virtual void onEncode(GBBuf&, const api::ReturnCode&) const;
+    [[deprecated]] virtual void onEncode(GBBuf&, const api::ReturnCode&) const;
     SCmd::UP onDecodeGetCommand(BBuf&) const override;
     SCmd::UP onDecodeRemoveCommand(BBuf&) const override;
     SCmd::UP onDecodeRevertCommand(BBuf&) const override;

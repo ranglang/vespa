@@ -63,9 +63,9 @@ public:
 class ComplexA
 {
 private:
-  uint32_t _fill1;
-  uint32_t _fill2;
-  uint32_t _fill3;
+  [[maybe_unused]] uint32_t _fill1;
+  [[maybe_unused]] uint32_t _fill2;
+  [[maybe_unused]] uint32_t _fill3;
 
 public:
 
@@ -82,9 +82,9 @@ public:
 class ComplexB
 {
 private:
-  uint32_t _fill1;
-  uint32_t _fill2;
-  uint32_t _fill3;
+  [[maybe_unused]] uint32_t _fill1;
+  [[maybe_unused]] uint32_t _fill2;
+  [[maybe_unused]] uint32_t _fill3;
 
 public:
 

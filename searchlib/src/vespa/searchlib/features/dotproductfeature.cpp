@@ -23,12 +23,6 @@ namespace search::features {
 namespace dotproduct {
 namespace wset {
 
-template <typename DimensionVType, typename DimensionHType, typename ComponentType, typename HashMapComparator>
-VectorBase<DimensionVType, DimensionHType, ComponentType, HashMapComparator>::VectorBase() { }
-
-template <typename DimensionVType, typename DimensionHType, typename ComponentType, typename HashMapComparator>
-VectorBase<DimensionVType, DimensionHType, ComponentType, HashMapComparator>::~VectorBase() { }
-
 template <typename V>
 V copyAndSync(const V & v) {
     V tmp(v);

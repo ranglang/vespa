@@ -64,6 +64,12 @@ public:
     const HashMap & getDimMap() const { return _dimMap; }
 };
 
+template <typename DimensionVType, typename DimensionHType, typename ComponentType, typename HashMapComparator>
+VectorBase<DimensionVType, DimensionHType, ComponentType, HashMapComparator>::VectorBase() { }
+
+template <typename DimensionVType, typename DimensionHType, typename ComponentType, typename HashMapComparator>
+VectorBase<DimensionVType, DimensionHType, ComponentType, HashMapComparator>::~VectorBase() { }
+
 /**
  * Represents a vector where the dimensions are integers.
  **/
