@@ -61,9 +61,12 @@ void sswap(T * a, T * b) {
 void
 TermFieldMatchData::swap(TermFieldMatchData &rhs)
 {
+#pragma GCC diagnostic push
+#pragma GCC diagnostic ignored "-Waddress-of-packed-member"
     sswap(&_docId, &rhs._docId);
     sswap(&_fieldId, &rhs._fieldId);
     sswap(&_sz, &rhs._sz);
+#pragma GCC diagnostic pop
     char tmp[sizeof(_data)];
     memcpy(tmp, &rhs._data, sizeof(_data));
     memcpy(&rhs._data, &_data, sizeof(_data));

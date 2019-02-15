@@ -209,7 +209,10 @@ main(int argc, char **argv)
 
         char serviceFile[PATH_MAX];
         if (! doOnlyFile) {
+#pragma GCC diagnostic push
+#pragma GCC diagnostic ignored "-Wformat-truncation"
             snprintf(serviceFile, sizeof serviceFile, "%s/%s.logcontrol", dir, service);
+#pragma GCC diagnostic pop
             file = serviceFile;
         }
         // fprintf(stderr, "Log control file %s:\n", file);

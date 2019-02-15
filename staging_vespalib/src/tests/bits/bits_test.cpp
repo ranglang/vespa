@@ -38,7 +38,9 @@ void Test::testFixed(const T * v, size_t sz)
     EXPECT_EQUAL(1ul << (sizeof(T)*8 - 1), Bits::reverse(static_cast<T>(1)));
     EXPECT_EQUAL(static_cast<T>(-1), Bits::reverse(static_cast<T>(-1)));
     for (size_t i(0); i < sz; i++) {
+#if !defined(__GNUC__) || __GNUC__ < 9
         EXPECT_EQUAL(Bits::reverse(v[i]), boost::detail::reflector<sizeof(T)*8>::reflect(v[i]));
+#endif
         EXPECT_EQUAL(Bits::reverse(Bits::reverse(v[i])), v[i]);
     }
 }
