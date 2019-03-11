@@ -4,6 +4,7 @@ package com.yahoo.config.model.provision;
 import com.yahoo.cloud.config.log.LogdConfig;
 import com.yahoo.config.application.api.ApplicationPackage;
 import com.yahoo.config.model.api.HostInfo;
+import com.yahoo.config.model.api.container.ContainerServiceType;
 import com.yahoo.config.model.deploy.DeployState;
 import com.yahoo.config.model.deploy.TestProperties;
 import com.yahoo.config.provision.ClusterMembership;
@@ -1821,10 +1822,10 @@ public class ModelProvisioningTest {
         Logserver logserver = admin.getLogserver();
         HostResource hostResource = logserver.getHostResource();
         assertNotNull(hostResource.getService("logserver"));
-        assertNotNull(hostResource.getService("container"));
+        assertNotNull(hostResource.getService(ContainerServiceType.LOGSERVER_CONTAINER.serviceName));
 
         // Test that the container gets config
-        String configId = admin.getLogserver().getHostResource().getService("container").getConfigId();
+        String configId = admin.getLogserver().getHostResource().getService(ContainerServiceType.LOGSERVER_CONTAINER.serviceName).getConfigId();
         ApplicationMetadataConfig.Builder builder = new ApplicationMetadataConfig.Builder();
         model.getConfig(builder, configId);
         ApplicationMetadataConfig cfg = new ApplicationMetadataConfig(builder);

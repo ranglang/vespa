@@ -24,10 +24,9 @@ public class LogserverContainer extends Container {
         addLogHandler(logServerCluster);
     }
 
-    // TODO: Change service type to 'logserver-container'
     @Override
     public ContainerServiceType myServiceType() {
-        return ContainerServiceType.CONTAINER;
+        return ContainerServiceType.LOGSERVER_CONTAINER;
     }
 
     private void addLogHandler(ContainerCluster cluster) {
