@@ -16,15 +16,15 @@ import static java.util.Objects.requireNonNull;
  *
  * @author jonmv
  */
-public class AthenzTenantPermit extends TenantPermit {
+public class AthenzTenantSpecification extends TenantSpecification {
 
     private final Optional<Property> property;
     private final Optional<PropertyId> propertyId;
     private final Optional<AthenzDomain> domain;
     private final OktaAccessToken token;
 
-    public AthenzTenantPermit(TenantName tenant, Principal user, Optional<AthenzDomain> domain,
-                              Optional<Property> property, Optional<PropertyId> propertyId, OktaAccessToken token) {
+    public AthenzTenantSpecification(TenantName tenant, Principal user, Optional<AthenzDomain> domain,
+                                     Optional<Property> property, Optional<PropertyId> propertyId, OktaAccessToken token) {
         super(tenant, user);
         this.domain = requireNonNull(domain);
         this.token = requireNonNull(token);

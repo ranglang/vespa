@@ -13,8 +13,8 @@ import com.yahoo.vespa.hosted.controller.tenant.CloudTenant;
 public class CloudPermitExtractor implements PermitExtractor {
 
     @Override
-    public CloudTenantPermit getTenantPermit(TenantName tenant, HttpRequest request) {
-        return new CloudTenantPermit(tenant, request.getJDiscRequest().getUserPrincipal(), "token");
+    public CloudTenantSpecification getTenantPermit(TenantName tenant, HttpRequest request) {
+        return new CloudTenantSpecification(tenant, request.getJDiscRequest().getUserPrincipal(), "token");
     }
 
     @Override

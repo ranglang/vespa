@@ -34,14 +34,14 @@ public class AthenzPermitExtractor implements PermitExtractor {
     }
 
     @Override
-    public TenantPermit getTenantPermit(TenantName tenant, HttpRequest request) {
+    public TenantSpecification getTenantPermit(TenantName tenant, HttpRequest request) {
         Inspector root = jsonToSlime(uncheck(() -> readBytes(request.getData(), 1 << 20))).get();
-        return new AthenzTenantPermit(tenant,
-                                      request.getJDiscRequest().getUserPrincipal(),
-                                      optional("athensDomain", root).map(AthenzDomain::new),
-                                      optional("property", root).map(Property::new),
-                                      optional("propertyId", root).map(PropertyId::new),
-                                      requireOktaAccessToken(request));
+        return new AthenzTenantSpecification(tenant,
+                                             request.getJDiscRequest().getUserPrincipal(),
+                                             optional("athensDomain", root).map(AthenzDomain::new),
+                                             optional("property", root).map(Property::new),
+                                             optional("propertyId", root).map(PropertyId::new),
+                                             requireOktaAccessToken(request));
     }
 
     @Override

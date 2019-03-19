@@ -11,12 +11,12 @@ import static java.util.Objects.requireNonNull;
  *
  * @author jonmv
  */
-public abstract class TenantPermit {
+public abstract class TenantSpecification {
 
     private final TenantName tenant;
     private final Principal user;
 
-    protected TenantPermit(TenantName tenant, Principal user) {
+    protected TenantSpecification(TenantName tenant, Principal user) {
         this.user = requireNonNull(user);
         this.tenant = requireNonNull(tenant);
     }

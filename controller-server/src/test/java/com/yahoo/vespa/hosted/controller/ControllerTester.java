@@ -46,7 +46,7 @@ import com.yahoo.vespa.hosted.controller.integration.RoutingGeneratorMock;
 import com.yahoo.vespa.hosted.controller.integration.ZoneRegistryMock;
 import com.yahoo.vespa.hosted.controller.permits.ApplicationPermit;
 import com.yahoo.vespa.hosted.controller.permits.AthenzApplicationPermit;
-import com.yahoo.vespa.hosted.controller.permits.AthenzTenantPermit;
+import com.yahoo.vespa.hosted.controller.permits.AthenzTenantSpecification;
 import com.yahoo.vespa.hosted.controller.persistence.ApplicationSerializer;
 import com.yahoo.vespa.hosted.controller.persistence.CuratorDb;
 import com.yahoo.vespa.hosted.controller.persistence.MockCuratorDb;
@@ -264,12 +264,12 @@ public final class ControllerTester {
         Optional<Tenant> existing = controller().tenants().get(name);
         if (existing.isPresent()) return name;
         AthenzUser user = new AthenzUser("user");
-        AthenzTenantPermit permit = new AthenzTenantPermit(name,
-                                                           new AthenzPrincipal(user),
-                                                           Optional.of(createDomainWithAdmin(domainName, user)),
-                                                           Optional.of(new Property("Property" + propertyId)),
-                                                           Optional.ofNullable(propertyId).map(Object::toString).map(PropertyId::new),
-                                                           new OktaAccessToken("okta-token"));
+        AthenzTenantSpecification permit = new AthenzTenantSpecification(name,
+                                                                         new AthenzPrincipal(user),
+                                                                         Optional.of(createDomainWithAdmin(domainName, user)),
+                                                                         Optional.of(new Property("Property" + propertyId)),
+                                                                         Optional.ofNullable(propertyId).map(Object::toString).map(PropertyId::new),
+                                                                         new OktaAccessToken("okta-token"));
         controller().tenants().create(permit);
         if (contact.isPresent())
             controller().tenants().lockOrThrow(name, LockedTenant.Athenz.class, tenant ->

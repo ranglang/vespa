@@ -10,7 +10,6 @@ import com.yahoo.vespa.athenz.api.AthenzPrincipal;
 import com.yahoo.vespa.athenz.api.AthenzResourceName;
 import com.yahoo.vespa.athenz.api.AthenzRole;
 import com.yahoo.vespa.athenz.api.AthenzService;
-import com.yahoo.vespa.athenz.api.AthenzUser;
 import com.yahoo.vespa.athenz.api.OktaAccessToken;
 import com.yahoo.vespa.athenz.client.zms.RoleAction;
 import com.yahoo.vespa.athenz.client.zms.ZmsClient;
@@ -20,9 +19,9 @@ import com.yahoo.vespa.hosted.controller.api.integration.athenz.AthenzClientFact
 import com.yahoo.vespa.hosted.controller.athenz.ApplicationAction;
 import com.yahoo.vespa.hosted.controller.permits.ApplicationPermit;
 import com.yahoo.vespa.hosted.controller.permits.AthenzApplicationPermit;
-import com.yahoo.vespa.hosted.controller.permits.AthenzTenantPermit;
-import com.yahoo.vespa.hosted.controller.permits.PermitStore;
-import com.yahoo.vespa.hosted.controller.permits.TenantPermit;
+import com.yahoo.vespa.hosted.controller.permits.AthenzTenantSpecification;
+import com.yahoo.vespa.hosted.controller.permits.AccessControlManager;
+import com.yahoo.vespa.hosted.controller.permits.TenantSpecification;
 import com.yahoo.vespa.hosted.controller.tenant.AthenzTenant;
 import com.yahoo.vespa.hosted.controller.tenant.Tenant;
 import com.yahoo.vespa.hosted.controller.tenant.UserTenant;
@@ -39,7 +38,7 @@ import java.util.stream.Collectors;
 /**
  * @author bjorncs
  */
-public class AthenzFacade implements PermitStore {
+public class AthenzFacade implements AccessControlManager {
 
     private static final Logger log = Logger.getLogger(AthenzFacade.class.getName());
     private final ZmsClient zmsClient;
@@ -58,8 +57,8 @@ public class AthenzFacade implements PermitStore {
     }
 
     @Override
-    public Tenant createTenant(TenantPermit permit, List<Tenant> existing, List<Application> applications) {
-        AthenzTenantPermit athenzPermit = (AthenzTenantPermit) permit;
+    public Tenant createTenant(TenantSpecification permit, List<Tenant> existing, List<Application> applications) {
+        AthenzTenantSpecification athenzPermit = (AthenzTenantSpecification) permit;
         AthenzDomain domain = athenzPermit.domain()
                                           .orElseThrow(() -> new IllegalArgumentException("Must provide Athenz domain."));
 
@@ -96,8 +95,8 @@ public class AthenzFacade implements PermitStore {
     }
 
     @Override
-    public void deleteTenant(TenantPermit permit, Tenant tenant, List<Application> applications) {
-        AthenzTenantPermit athenzPermit = (AthenzTenantPermit) permit;
+    public void deleteTenant(TenantSpecification permit, Tenant tenant, List<Application> applications) {
+        AthenzTenantSpecification athenzPermit = (AthenzTenantSpecification) permit;
         AthenzDomain domain = ((AthenzTenant) tenant).domain();
 
         for (Application application : applications)

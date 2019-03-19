@@ -11,11 +11,11 @@ import static java.util.Objects.requireNonNull;
  *
  * @author jonmv
  */
-public class CloudTenantPermit extends TenantPermit {
+public class CloudTenantSpecification extends TenantSpecification {
 
     private final String registrationToken;
 
-    public CloudTenantPermit(TenantName tenant, Principal user, String registrationToken) {
+    public CloudTenantSpecification(TenantName tenant, Principal user, String registrationToken) {
         super(tenant, user);
         this.registrationToken = requireNonNull(registrationToken);
     }

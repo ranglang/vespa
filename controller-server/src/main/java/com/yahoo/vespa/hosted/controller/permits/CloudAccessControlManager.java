@@ -14,18 +14,18 @@ import java.util.List;
  * @author jonmv
  * @author tokle
  */
-public class CloudPermitStore implements PermitStore {
+public class CloudAccessControlManager implements AccessControlManager {
 
     private final Marketplace marketplace;
 
     @Inject
-    public CloudPermitStore(Marketplace marketplace) {
+    public CloudAccessControlManager(Marketplace marketplace) {
         this.marketplace = marketplace;
     }
 
     @Override
-    public CloudTenant createTenant(TenantPermit permit, List<Tenant> existing, List<Application> applications) {
-        CloudTenantPermit cloudPermit = (CloudTenantPermit) permit;
+    public CloudTenant createTenant(TenantSpecification permit, List<Tenant> existing, List<Application> applications) {
+        CloudTenantSpecification cloudPermit = (CloudTenantSpecification) permit;
 
         // Do things ...
 
@@ -33,7 +33,7 @@ public class CloudPermitStore implements PermitStore {
     }
 
     @Override
-    public void deleteTenant(TenantPermit permit, Tenant tenant, List<Application> applications) {
+    public void deleteTenant(TenantSpecification permit, Tenant tenant, List<Application> applications) {
 
         // Probably delete customer subscription?
 

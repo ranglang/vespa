@@ -3,10 +3,9 @@ package com.yahoo.vespa.hosted.controller;
 
 import com.yahoo.config.provision.TenantName;
 import com.yahoo.vespa.curator.Lock;
-import com.yahoo.vespa.hosted.controller.api.integration.organization.Contact;
 import com.yahoo.vespa.hosted.controller.concurrent.Once;
-import com.yahoo.vespa.hosted.controller.permits.PermitStore;
-import com.yahoo.vespa.hosted.controller.permits.TenantPermit;
+import com.yahoo.vespa.hosted.controller.permits.AccessControlManager;
+import com.yahoo.vespa.hosted.controller.permits.TenantSpecification;
 import com.yahoo.vespa.hosted.controller.persistence.CuratorDb;
 import com.yahoo.vespa.hosted.controller.tenant.AthenzTenant;
 import com.yahoo.vespa.hosted.controller.tenant.Tenant;
@@ -26,8 +25,6 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 import java.util.stream.Collectors;
 
-import static com.yahoo.vespa.hosted.controller.tenant.Tenant.Type.cloud;
-
 /**
  * A singleton owned by the Controller which contains the methods and state for controlling tenants.
  *
@@ -40,9 +37,9 @@ public class TenantController {
 
     private final Controller controller;
     private final CuratorDb curator;
-    private final PermitStore permits;
+    private final AccessControlManager permits;
 
-    public TenantController(Controller controller, CuratorDb curator, PermitStore permits) {
+    public TenantController(Controller controller, CuratorDb curator, AccessControlManager permits) {
         this.controller = Objects.requireNonNull(controller, "controller must be non-null");
         this.curator = Objects.requireNonNull(curator, "curator must be non-null");
         this.permits = permits;
@@ -107,7 +104,7 @@ public class TenantController {
     }
 
     /** Create a tenant, provided the given permit is valid. */
-    public void create(TenantPermit permit) {
+    public void create(TenantSpecification permit) {
         try (Lock lock = lock(permit.tenant())) {
             requireNonExistent(permit.tenant());
             curator.writeTenant(permits.createTenant(permit, asList(), Collections.emptyList()));
@@ -137,7 +134,7 @@ public class TenantController {
     }
 
     /** Updates the tenant contained in the given permit with new data. */
-    public void update(TenantPermit permit) {
+    public void update(TenantSpecification permit) {
         try (Lock lock = lock(permit.tenant())) {
             Tenant tenant = require(permit.tenant());
             List<Tenant> otherTenants = new ArrayList<>(asList());
@@ -150,7 +147,7 @@ public class TenantController {
     }
 
     /** Deletes the tenant in the given permit. */
-    public void delete(TenantPermit permit) {
+    public void delete(TenantSpecification permit) {
         try (Lock lock = lock(permit.tenant())) {
             Tenant tenant = require(permit.tenant());
             if ( ! controller.applications().asList(tenant.name()).isEmpty())
